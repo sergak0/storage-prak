@@ -95,7 +95,13 @@ class App:
 
 if __name__ == '__main__':
     data = pd.read_csv('data.csv')
-    data.drop(['Unnamed: 0'], 1, inplace=True)
+    products_info = pd.read_csv('data_shops.csv')
+    x = products_info.groupby('day').sum()
+    data = pd.merge(data, x.drop(labels='shop_id', axis=1), on='day')
+    data = data.astype(int)
+    # print(data.columns)
+    # exit(0)
+
     data = data.sort_values(by='day')
     data['step'] = 0
     sum_df = pd.DataFrame(columns=data.columns)
