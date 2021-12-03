@@ -205,7 +205,12 @@ if __name__ == '__main__':
     pg.init()
     pg.font.init()
     data = pd.read_csv('data_shops.csv')
-    app = App(28, data)
+    for name in product_names:
+        if not name in data.columns:
+            data[name] = 0
+
+    shops_cnt = data['shop_id'].max() + 1
+    app = App(shops_cnt, data)
     app.run()
     pg.quit()
 
