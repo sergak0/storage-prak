@@ -1,3 +1,4 @@
+import os
 import time
 import traceback
 
@@ -87,6 +88,9 @@ class App:
                 break
 
             if event == 'start':
+                with open('input.txt', 'w') as f:
+                    f.write("{} {} {}".format(values['products'], values['shops'], values['days']))
+                os.system('./main')
                 fig = px.line(self.data, x='day', animation_frame='step', y=self.data.drop(['day', 'step'], 1).columns)
                 fig.show()
 
