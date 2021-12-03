@@ -80,10 +80,14 @@ class DataGen:
 
         res = []
         today = self.data[self.data['day'] == self.day]
+        last = self.product_ind
+
         while self.product_ind < len(product_names) and len(today[today[product_names[self.product_ind]] != 0]) == 0:
             self.product_ind += 1
 
         if self.product_ind == len(product_names):
+            if last == 0:
+                return [(0, product_names[0])]
             return []
 
         name = product_names[self.product_ind]
@@ -132,6 +136,7 @@ class App:
         shop_sprite.fill(pg.Color('dodgerblue1'))
         self.shops = [MySprite(self.start_pos, self.shops_coord.get_goal(i), shop_sprite, self.all_sprites) for i in range(shops_count)]
 
+        self.first_update = True
         self.products = []
 
     def get_product_image(self, name):
@@ -205,6 +210,7 @@ if __name__ == '__main__':
     pg.init()
     pg.font.init()
     data = pd.read_csv('data_shops.csv')
+
     for name in product_names:
         if not name in data.columns:
             data[name] = 0
