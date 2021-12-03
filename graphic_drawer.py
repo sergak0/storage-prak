@@ -18,5 +18,5 @@ if __name__ == '__main__':
         data['step'] = i
         sum_df = pd.concat([sum_df, data[:i + 1]])
 
-    fig = px.line(sum_df, x='day', animation_frame='step', y=sum_df.drop(['day', 'step'], 1).columns)
+    fig = px.line(sum_df, x='day', animation_frame='step', y=sum_df.drop(labels=['day', 'step'], axis=1).columns)
     fig.show()
